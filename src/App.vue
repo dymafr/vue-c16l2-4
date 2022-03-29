@@ -21,52 +21,54 @@ import { ref } from 'vue';
 
 const show = ref(true);
 
-function appearEnter(el,done) => {
+function appearEnter(el, done) {
   let opacity = 0;
   const intervalId = setInterval(() => {
     if (opacity >= 1) {
-        clearInterval(intervalId);
-        done();
+      clearInterval(intervalId);
+      done();
     }
     el.style.opacity = opacity;
     opacity += 0.1;
   }, 100);
 }
 
-    function beforeEnter(el) => {
-      el.style.opacity = 1;
-      el.style.top = 0;
-      el.style.left = 0;
+function beforeEnter(el) {
+  el.style.opacity = 1;
+  el.style.top = 0;
+  el.style.left = 0;
+}
+
+function enter(el, done) {
+  let pos = 0;
+  let dir = 'down';
+  let intervalId = setInterval(() => {
+    if (pos < 0) {
+      clearInterval(intervalId);
+      done();
+    } else if (dir === 'up') {
+      pos--;
+      el.style.top = pos + 'px';
+    } else if (pos === 280) {
+      dir = 'up';
+    } else {
+      pos++;
+      el.style.top = pos + 'px';
     }
-    function enter(el, done) => {
-      let pos = 0;
-      let dir = 'down';
-      let intervalId = setInterval(() => {
-        if (pos < 0 ) {
-            clearInterval(intervalId);
-            done();
-        } else if (dir === 'up') {
-            pos--;
-            el.style.top = pos + 'px';
-        } else if (pos === 280) {
-            dir = 'up';
-        } else {
-            pos++;
-            el.style.top = pos + 'px';
-        }
-      }, 5)
-    },
-    function leave(el, done) => {
-      let opacity = 1;
-      const intervalId = setInterval(() => {
-        if (opacity <= 0.1) {
-            clearInterval(intervalId);
-            done();
-        }
-        el.style.opacity = opacity;
-        opacity -= opacity *  0.1;
-      }, 100);
+  }, 5);
+}
+
+function leave(el, done) {
+  let opacity = 1;
+  const intervalId = setInterval(() => {
+    if (opacity <= 0.1) {
+      clearInterval(intervalId);
+      done();
     }
+    el.style.opacity = opacity;
+    opacity -= opacity * 0.1;
+  }, 100);
+}
 </script>
 
 <style lang="scss">
