@@ -6,6 +6,7 @@
     <div id="container">
       <Transition
         appear
+        :css="false"
         @before-enter="beforeEnter"
         @enter="enter"
         @leave="leave"
