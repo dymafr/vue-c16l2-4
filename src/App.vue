@@ -5,7 +5,7 @@
     </button>
     <div id="container">
       <Transition
-        @appear="appearEnter"
+        appear
         @before-enter="beforeEnter"
         @enter="enter"
         @leave="leave"
@@ -20,18 +20,6 @@
 import { ref } from 'vue';
 
 const show = ref(true);
-
-function appearEnter(el, done) {
-  let opacity = 0;
-  const intervalId = setInterval(() => {
-    if (opacity >= 1) {
-      clearInterval(intervalId);
-      done();
-    }
-    el.style.opacity = opacity;
-    opacity += 0.1;
-  }, 100);
-}
 
 function beforeEnter(el) {
   el.style.opacity = 1;
